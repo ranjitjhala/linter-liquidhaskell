@@ -40,13 +40,20 @@ infoErrors = (fp, info) ->
       errors.push(e)
   return errors
 
+takeAfter = (str, needle) ->
+  i = str.indexOf(needle)
+  return str unless (0 <= i)
+  str.substring(i + needle.length)
+
 jsonErrors = (fp, message) ->
-  # console.log(message)
+  console.log(message)
   return [] unless message?
-  errors = try JSON.parse message
+  result = takeAfter(message, 'RESULT')
+  console.log(result)
+  errors = try JSON.parse result
   return [] unless errors?
-  # console.log("jsonErrors")
-  # console.log(errors)
+  console.log("jsonErrors")
+  console.log(errors)
   errors.map (err) ->
     type: 'Error',
     text: err.message,
