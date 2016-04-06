@@ -2,7 +2,7 @@
 
 This package will lint your opened Haskell in Atom, using [liquidhaskell](https://hackage.haskell.org/package/liquidhaskell).
 
-![linter-liquidhaskell in action](https://raw.githubusercontent.com/ranjitjhala/linter-liquid/master/screenshot.png)
+![linter-liquidhaskell in action](https://raw.githubusercontent.com/ranjitjhala/linter-liquidhaskell/master/screenshot.png)
 
 ## Installation
 
