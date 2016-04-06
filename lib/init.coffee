@@ -46,14 +46,14 @@ takeAfter = (str, needle) ->
   str.substring(i + needle.length)
 
 jsonErrors = (fp, message) ->
-  console.log(message)
+  # console.log(message)
   return [] unless message?
   result = takeAfter(message, 'RESULT')
-  console.log(result)
+  # console.log(result)
   errors = try JSON.parse result
   return [] unless errors?
-  console.log("jsonErrors")
-  console.log(errors)
+  # console.log("jsonErrors")
+  # console.log(errors)
   errors.map (err) ->
     type: 'Error',
     text: err.message,
