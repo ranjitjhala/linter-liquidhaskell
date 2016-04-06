@@ -1,7 +1,7 @@
 {
   "name": "linter-liquidhaskell",
   "main": "./lib/init",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Lint Haskell code with LiquidHaskell",
   "repository": "https://github.com/ranjitjhala/linter-liquidhaskell",
   "license": "MIT",
