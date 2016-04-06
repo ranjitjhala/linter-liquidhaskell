@@ -41,18 +41,20 @@ infoErrors = (fp, info) ->
   return errors
 
 jsonErrors = (fp, message) ->
+  # console.log(message)
   return [] unless message?
-  info = try JSON.parse message
-  return [] unless info?
-  info.map (error) ->
+  errors = try JSON.parse message
+  return [] unless errors?
+  # console.log("jsonErrors")
+  # console.log(errors)
+  errors.map (err) ->
     type: 'Error',
-    text: error.message,
-    # html: [error.hint, "#{error.from} ==>", "#{ error.to}"].join "<br/>"
-    filePath: error.file or fp,
+    text: err.message,
+    filePath: fp,
     range: [
       # Atom expects ranges to be 0-based
-      [error.startLine - 1, error.startColumn - 1],
-      [error.endLine - 1, error.endColumn]
+      [err.start.line - 1, err.start.column - 1],
+      [err.stop.line  - 1, err.stop.column]
     ]
 
 getUserHome = () ->
@@ -95,14 +97,12 @@ module.exports =
         return new Promise (resolve, reject) =>
           filePath = textEditor.getPath()
           message  = []
-          # console.log ("exec: " + @executablePath)
-          # console.log ("path: " + textEditor.getPath())
-          # console.log ("zog : " + getUserHome())
+          # console.log ("filePath: " + filePath)
           command = @executablePath
           args    = [ "--json", filePath ]
           if @useStack
             command = "stack"
-            args    = [ "exec", "--" ].concat(args)
+            args    = [ "exec", "--", @executablePath ].concat(args)
           # console.warn(command, args)
           process = new BufferedProcess
             command: command
