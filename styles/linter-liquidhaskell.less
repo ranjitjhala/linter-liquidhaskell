@@ -36,4 +36,20 @@ linter-multiline-message {
   }
 }
 
+atom-text-editor::shadow .linter-highlight, .linter-highlight{
+  &.error {
+    &:not(.line-number){
+      background-color: @background-color-error;
+      color: white;
+    }
+    .linter-gutter{
+      color: @background-color-error;
+    }
+    .region {
+      border-bottom: 2px dotted @background-color-error;
+      // PINK border-bottom: none; 
+      // PINK background-color: #fcbaba;
 
+    }
+  }
+}
