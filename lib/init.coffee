@@ -82,6 +82,11 @@ module.exports =
       type: "string"
       default: "liquid"
 
+    liquidIncludeDir:
+      title: "Include file directory" 
+      type: "boolean"
+      default: true 
+
   activate: ->
     @subscriptions = new CompositeDisposable
     @subscriptions.add atom.config.observe "linter-liquidhaskell.liquidUseStack",
@@ -90,6 +95,9 @@ module.exports =
     @subscriptions.add atom.config.observe "linter-liquidhaskell.liquidExecutablePath",
       (executablePath) =>
         @executablePath = executablePath
+     @subscriptions.add atom.config.observe "linter-liquidhaskell.liquidIncludeDir",
+      (includeDir) =>
+        @includeDir = includeDir 
 
   deactivate: ->
     @subscriptions.dispose()
@@ -103,14 +111,17 @@ module.exports =
       lint: (textEditor) =>
         return new Promise (resolve, reject) =>
           filePath = textEditor.getPath()
+          dirPath  = textEditor.getDirectoryPath()
           message  = []
           # console.log ("filePath: " + filePath)
           command = @executablePath
           args    = [ "--json", filePath ]
+          if @includeDir 
+            args = ["-i", dirPath].concat(args)
           if @useStack
             command = "stack"
             args    = [ "exec", "--", @executablePath ].concat(args)
-          # console.warn(command, args)
+          console.warn(command, args)
           process = new BufferedProcess
             command: command
             args: args
